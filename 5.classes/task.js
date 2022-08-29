@@ -101,48 +101,68 @@ class Student {
 
 
     addMark(mark, subjectName) {
-        this.subject = subjectName;
-        if (this.marks === undefined) {
-            this.marks = [mark];
+        if (this.marksAlgebra === undefined && subjectName === "algebra") {
+            this.marksAlgebra = [mark];
         };
-        if (1 >= mark <= 5) {
-            this.marks.push(mark);
+        if (1 >= mark <= 5 && subjectName === "algebra") {
+            this.marksAlgebra.push(mark);
+        } else if (this.marksGeometry === undefined && subjectName === "geometry") {
+            this.marksGeometry = [mark];
+        };
+        if (1 >= mark <= 5 && subjectName === "geometry") {
+            this.Geometry.push(mark);
         }
     }
     addMarks(subjectName, ...arr) {
-        this.subject = subjectName;
-        if (this.marks === undefined) {
-            this.marks = arr;
+        if (this.marksAlgebra === undefined && subjectName === "algebra") {
+            this.marksAlgebra = arr;
         } else {
-            this.marks.push(...arr);
+            this.marksAlgebra.push(...arr);
+        };
+        if (this.marksGeometry === undefined && subjectName === "geometry") {
+            this.marksGeometry = arr;
+        } else {
+            this.marksAlgebra.push(...arr);
+        }
+    }
+
+    getAverageBySubject() {
+        if (this.marksAlgebra.length === 0) {
+            return 0;
+        } else {
+            let sumAlgebra = 0;
+            let countAlgebra = 0;
+            for (let i = 0; i < this.marksAlgebra.length; i++) {
+                countAlgebra += 1;
+                sumAlgebra += this.marksAlgebra[i];
+            }
+            return sumAlgebra / countAlgebra;
+        };
+
+        if (this.marksGeometry.length === 0) {
+            return 0;
+        } else {
+            let sumGeometry = 0;
+            let countGeometry = 0;
+            for (let i = 0; i < this.marksGeometry.length; i++) {
+                countGeometry += 1;
+                sumGeometry += this.marksGeometry[i];
+            }
+            return sumGeometry / countGeometry;
         }
     }
     getAverag() {
-        if (this.marks.length === 0) {
+        this.all = [...this.marksAlgebra, ...this.marksGeometry];
+        if (this.all.length === 0) {
             return 0;
         } else {
             let sum = 0;
             let count = 0;
             for (let i = 0; i < this.marks.length; i++) {
                 count += 1;
-                sum += this.marks[i];
+                sum += this.all[i];
             }
             return sum / count;
-        }
-    }
-
-    getAverageBySubject(subjectName) {
-        this.subject = subjectName;
-        if (this.marks.length === 0) {
-            return 0;
-        } else {
-            let sumSubject = 0;
-            let countSubject = 0;
-            for (let i = 0; i < this.marks.length; i++) {
-                countSubject += 1;
-                sumSubject += this.marks[i];
-            }
-            return sumSubject / countSubject;
         }
     }
 
