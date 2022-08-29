@@ -105,7 +105,7 @@ class Student {
         if (this.marks === undefined) {
             this.marks = [mark];
         };
-        if (mark <= 5) {
+        if (1 >= mark <= 5) {
             this.marks.push(mark);
         }
     }
