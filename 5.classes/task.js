@@ -113,15 +113,16 @@ class Student {
     }
 
 
-    getAverageBySubject() {
+    getAverageBySubject(subjectName) {
         if (!this.marks[subjectName]) {
             return 0;
         }
-        return this.marks[subjectName].reduse((acc, mark) => acc + mark, 0) / this.marks[subjectName].length;
+        return this.marks[subjectName].reduce((acc, mark) => acc + mark, 0) / this.marks[subjectName].length;
     }
 
-    getAverag() {
-        return Object.keys(this.marks).reduce((acc, subjectName) => acc + this.getAverageBySubject(subjectName), 0) / Obgekt.keys(this.marks).leght;
+    getAverage() {
+        return Object.keys(this.marks).reduce(
+            (acc, subjectName) => acc + this.getAverageBySubject(subjectName), 0) / Object.keys(this.marks).length;
     }
 
     exclude(reason) {
@@ -131,15 +132,3 @@ class Student {
 
     }
 }
-
-
-const student = new Student("Олег Никифоров");
-student.addMark(5, "algebra");
-student.addMark(5, "algebra");
-student.addMark(5, "geometry");
-student.addMark(4, "geometry");
-student.addMark(6, "geometry"); // "Ошибка, оценка должна быть числом от 1 до 5"
-student.getAverageBySubject("geometry"); // Средний балл по предмету geometry 4.5
-student.getAverageBySubject("biology"); // Несуществующий предмет
-student.getAverage(); // Средний балл по всем предметам 4.75
-student.exclude("Исключен за попытку подделать оценки");
