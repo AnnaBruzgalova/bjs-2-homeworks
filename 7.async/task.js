@@ -10,12 +10,11 @@ class AlarmClock {
         }
 
         let validId = this.alarmCollection.some((item) => id == this.alarmCollection[0].id);
-        if (validId == true) {
+        if (validId) {
             console.error('Звонок с данным id уже существует');
             return;
         }
-        let bell = { id, time, callback };
-        this.alarmCollection.push(bell);
+        this.alarmCollection.push({ id, time, callback });
     }
 
     removeClock(id) {
@@ -38,7 +37,7 @@ class AlarmClock {
         }
         if (this.timerId === null) {
             this.timerId = setInterval(() => {
-                this.alarmCollection.forEach(clock => checkClock(clock));
+                this.alarmCollection.forEach(checkClock);
             }, 1000);
         }
         return;
