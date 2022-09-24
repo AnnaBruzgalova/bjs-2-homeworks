@@ -11,8 +11,8 @@ function cachingDecoratorNew(func) {
 
         let result = func(...args); // в кэше результата нет - придётся считать
         cache.push({
-            result: result,
-            hash: hash
+            result,
+            hash
         }); // добавляем элемент с правильной структурой
         if (cache.length > 5) {
             cache.shift(); // если слишком много элементов в кэше надо удалить самый старый (первый) 
@@ -23,22 +23,25 @@ function cachingDecoratorNew(func) {
     return wrapper;
 }
 
-function debounceDecoratorNew(func, delay) {
-    let timeout;
-    let flag = false;
-    wrapper.count = 0;
 
-    function wrapper(...args) {
-        wrapper.count++;
-        if (!flag) {
-            func.apply(this, args);
+
+function debounceDecoratorNew(func, delay) {
+    let timeoutId = null;
+    wrapper.allCount = 0;
+
+    return function wrapper(...args) {
+        wrapper.allCount++;
+        if (timeoutId) {
+            clearTimeout(timeoutId);
         }
-        flag = true;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            func.apply(this, args);
-            flag = false;
-        }, delay);
-    };
-    return wrapper;
+
+        timeoutId = setTimeout(() => {
+            func.count = 0;
+            timeoutId = null;
+
+            function func(...args) {
+                func.count++;
+            };
+        }, delay)
+    }
 }
